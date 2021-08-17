@@ -1,4 +1,4 @@
-package com.celihack.testgame;
+package com.celihack.testgame.object;
 
 import android.graphics.Canvas;
 

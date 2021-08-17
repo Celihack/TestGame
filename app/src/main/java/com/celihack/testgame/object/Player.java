@@ -1,10 +1,12 @@
-package com.celihack.testgame;
+package com.celihack.testgame.object;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 
 import androidx.core.content.ContextCompat;
+
+import com.celihack.testgame.GameLoop;
+import com.celihack.testgame.Joystick;
+import com.celihack.testgame.R;
 
 
 /**

@@ -5,13 +5,13 @@ import android.view.SurfaceHolder;
 
 public class GameLoop extends Thread {
 
-    private static final double MAX_UPS = 60.0;
+    public static final double MAX_UPS = 60.0;
     private static final double UPS_PERIOD = 1E+3/MAX_UPS;
 
     private double averageUPS;
     private double averageFPS;
 
-    private  Game game;
+    private final Game game;
     private boolean isRunning = false;
     private SurfaceHolder surfaceHolder;
 

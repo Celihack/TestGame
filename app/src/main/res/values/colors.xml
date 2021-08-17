@@ -9,5 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="magenta">#FF00FF</color>
     <color name="player">#2196F3</color>
+    <color name="enemy">#E6093D</color>
 
 </resources>

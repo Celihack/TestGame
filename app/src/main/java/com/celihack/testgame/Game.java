@@ -6,26 +6,39 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
+
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
+import com.celihack.testgame.object.Enemy;
+import com.celihack.testgame.object.Player;
+
 public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
-    private Player player;
-    private GameLoop gameLoop;
+    private final Enemy enemy;
+    private Joystick joystick;
+    private final Player player;
+    private final GameLoop gameLoop;
 
     public Game(Context context) {
         super(context);
 
+        //inizializzazione game loop
         SurfaceHolder surfaceHolder = getHolder();
         surfaceHolder.addCallback(this);
+        gameLoop = new GameLoop(this, surfaceHolder);
+
+        // Inizializzazione joystick
+        joystick = new Joystick(275,700,70,40);
 
         // Inizializziazione player
-        player = new Player(getContext(), 500,500,30);
+        player = new Player(getContext(),joystick, 500,500,30);
 
-        gameLoop = new GameLoop(this, surfaceHolder);
+        //inizializzazione enemy
+        enemy = new Enemy(context, player, 880,500,30);
+
+
         setFocusable(true);
 
     }
@@ -36,8 +49,18 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         switch (event.getAction()){
 
             case MotionEvent.ACTION_DOWN:
+                if(joystick.isPressed((double) event.getX(), (double) event.getY())) {
+                    joystick.setIsPressed(true);
+                }
+                return true;
             case MotionEvent.ACTION_MOVE:
-                player.setPosition((double) event.getX(), (double) event.getY());
+                if(joystick.getIsPressed()) {
+                    joystick.setActuator((double) event.getX(), (double) event.getY());
+                }
+                return true;
+            case MotionEvent.ACTION_UP:
+                joystick.setIsPressed(false);
+                joystick.resetActuator();
                 return true;
 
         }
@@ -68,7 +91,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
         drawFPS(canvas);
         drawUPS(canvas);
 
+        joystick.draw(canvas);
         player.draw(canvas);
+        enemy.draw(canvas);
     }
 
     public void drawUPS(Canvas canvas){
@@ -94,8 +119,9 @@ public class Game extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void update() {
-
+        joystick.update();
         player.update();
+        enemy.update();
 
     }
 }

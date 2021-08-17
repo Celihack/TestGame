@@ -1,8 +1,11 @@
-package com.celihack.testgame;
+package com.celihack.testgame.object;
 
 import android.content.Context;
 
 import androidx.core.content.ContextCompat;
+
+import com.celihack.testgame.GameLoop;
+import com.celihack.testgame.R;
 
 /**
  * Enemy è un personaggio che si muove sempre nella direzione del player
